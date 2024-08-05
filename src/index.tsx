@@ -1,4 +1,4 @@
-import './styles/index.css';
+import '../styles/index.css';
 
 import React from 'react';
 import { createRoot } from 'react-dom/client';
@@ -8,7 +8,8 @@ import configureAppStore, { getPreloadedState } from './store/configureStore';
 
 import AppContextProvider from './contexts/AppContextProvider';
 
-import { ToDoList } from '@components/ToDo/ToDoList';
+import Home from './pages/Home/Home';
+import './i18n';
 
 (async () => {
     const preloadedState = getPreloadedState();
@@ -19,7 +20,7 @@ import { ToDoList } from '@components/ToDo/ToDoList';
         <React.StrictMode>
             <ReduxProvider store={configureAppStore(preloadedState)}>
                 <AppContextProvider>
-                    <ToDoList />
+                    <Home/>
                 </AppContextProvider>
             </ReduxProvider>
         </React.StrictMode>
