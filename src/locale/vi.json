@@ -2,6 +2,9 @@
     "translation": {
       "specificKey": "Bản dịch",
       "headerTitle": "Tìm kiếm dễ dàng hơn bao giờ hết.",
-      "headerLogoLabel": "Chuuyển sang Algolia website"
+      "headerLogoLabel": "Chuuyển sang Algolia website",
+      "categoryMenuHeader": "Phân loại",
+      "clearFilter": "Xoá bộ lọc",
+      "containerHeader": "Bộ lọc"
     }
   }

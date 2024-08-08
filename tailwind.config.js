@@ -9,6 +9,9 @@ module.exports = {
       colors: {
         'search-icon': 'rgb(226, 164, 0)',
       },
+      fontFamily: {
+        'hind': 'Hind, sans-serif',
+      }
     },
   },
   variants: {
