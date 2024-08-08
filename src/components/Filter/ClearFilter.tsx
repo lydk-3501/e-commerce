@@ -9,10 +9,10 @@ const ClearFilter = () => {
         <button className="clear-filter flex justify-between leading-8 text-slate-500 text-[12px]">
             <div className="pr-2 pt-[10px] text-black">
                 <TbReload />
-            </div>     
-            {t("clearFilter")}
+            </div>
+            {t('clearFilter')}
         </button>
     );
-}
+};
 
 export default ClearFilter;
