@@ -5,6 +5,9 @@
       "headerLogoLabel": "Go to the Algolia website",
       "categoryMenuHeader": "Category",
       "clearFilter": "Clear Filter",
-      "containerHeader": "Filters"
+      "containerHeader": "Filters",
+      "brandMenuHeader": "Brands",
+      "brandSearchPlaceholder": "Search for brand",
+      "toggleIconAlt": "More"
     }
 }

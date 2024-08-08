@@ -1,25 +1,19 @@
 import { FilterParams } from '../filter.type';
 
-interface MenuItem {
+interface BrandMenuItemProps {
     label: string;
     count: string;
-    childrenItems?: MenuItem[];
+    value: string;
 }
 
-interface CategoryMenuItemProps {
-    label: string;
-    count: string;
-    childrenItems?: MenuItem[];
-}
-
-interface ComponentProps extends CategoryMenuItemProps {
+interface ComponentProps extends BrandMenuItemProps {
     params: FilterParams;
     setParams: React.Dispatch<React.SetStateAction<FilterParams>>;
 }
 
 export { ComponentProps };
 
-export interface CategoryProps {
+export interface BrandProps {
     params: FilterParams;
     setParams: React.Dispatch<React.SetStateAction<FilterParams>>;
 }
