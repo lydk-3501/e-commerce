@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { ComponentProps } from './brand.type';
-import { FilterParams } from '../filter.type'; // Import the FilterParams type
 
 const BrandItem: React.FC<ComponentProps> = ({
     label,
@@ -9,24 +8,18 @@ const BrandItem: React.FC<ComponentProps> = ({
     params,
     setParams,
 }) => {
-    const [isSelected, setSelected] = useState(false);
+    const isSelected =
+        Array.isArray(params.brand) && params.brand.includes(value);
 
-    useEffect(() => {
-        setSelected(params.brand.includes(value));
-    }, [params, value]);
+    const handleBrandSelect = () => {
+        const newBrand = isSelected
+            ? params.brand.filter((item) => item !== value)
+            : [...params.brand, value];
 
-    const handleCheckboxChange = () => {
-        setParams((prevParams: FilterParams) => {
-            const newBrands = isSelected
-                ? prevParams.brand.filter((brand) => brand !== value)
-                : [...prevParams.brand, value];
-
-            return {
-                ...prevParams,
-                brand: newBrands,
-            };
-        });
-        setSelected(!isSelected);
+        setParams((prevParams) => ({
+            ...prevParams,
+            brand: newBrand,
+        }));
     };
 
     return (
@@ -34,9 +27,9 @@ const BrandItem: React.FC<ComponentProps> = ({
             <input
                 className="brand-checkbox mr-4"
                 type="checkbox"
-                checked={isSelected}
-                onChange={handleCheckboxChange}
                 value={value}
+                checked={isSelected}
+                onChange={handleBrandSelect}
             />
             <span
                 className={`brand-item-label text-[0.9rem] ${
