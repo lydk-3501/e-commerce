@@ -5,6 +5,9 @@
       "headerLogoLabel": "Chuuyển sang Algolia website",
       "categoryMenuHeader": "Phân loại",
       "clearFilter": "Xoá bộ lọc",
-      "containerHeader": "Bộ lọc"
+      "containerHeader": "Bộ lọc",
+      "brandMenuHeader": "Thương hiệu",
+      "brandSearchPlaceholder": "Tìm kiếm thương hiệu",
+      "toggleIconAlt": "Thêm"
     }
   }

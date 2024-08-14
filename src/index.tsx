@@ -20,7 +20,7 @@ import './i18n';
         <React.StrictMode>
             <ReduxProvider store={configureAppStore(preloadedState)}>
                 <AppContextProvider>
-                    <Home/>
+                    <Home />
                 </AppContextProvider>
             </ReduxProvider>
         </React.StrictMode>
