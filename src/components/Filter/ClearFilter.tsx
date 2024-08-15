@@ -1,16 +1,13 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { TbReload } from 'react-icons/tb';
-import { ClearFilterProps } from './filter.type';
+import { ClearFilterProps, initialFilterParams } from './filter.type';
 
 const ClearFilter: React.FC<ClearFilterProps> = ({ setParams }) => {
     const { t } = useTranslation();
 
     const handleClearFilters = () => {
-        setParams({
-            category: '',
-            brand: [] as string[],
-        });
+        setParams(initialFilterParams);
     };
 
     return (

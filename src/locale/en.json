@@ -8,6 +8,10 @@
       "containerHeader": "Filters",
       "brandMenuHeader": "Brands",
       "brandSearchPlaceholder": "Search for brand",
-      "toggleIconAlt": "More"
+      "toggleIconAlt": "More",
+      "sliderHeader": "Price",
+      "freeshippingHeader": "Free Shipping",
+      "freeshippingToggleLabel": "Display only items with free shipping",
+      "ratingHeader": "Ratings"
     }
 }

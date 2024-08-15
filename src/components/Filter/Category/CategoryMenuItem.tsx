@@ -42,9 +42,9 @@ const CategoryMenuItem: React.FC<ComponentProps> = ({
             >
                 <div className="flex items-center justify-start h-12">
                     <img
-                        className={`h-3 w-3 ${isExpanded ? '' : 'rotate-180' }`}
+                        className={`h-3 w-3 ${isExpanded ? '' : 'rotate-180'}`}
                         src="../../../../public/images/toggle-icon.svg"
-                        alt={t("toggleIconAlt")}
+                        alt={t('toggleIconAlt')}
                         onClick={handleCategorySelect}
                     />
                     <span
