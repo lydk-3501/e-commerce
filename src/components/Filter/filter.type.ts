@@ -5,7 +5,6 @@ export interface FilterParams {
     priceMax: number;
     isFreeShipping: boolean;
     rating: number;
-    count: number;
 }
 
 export interface ClearFilterProps {
@@ -19,5 +18,4 @@ export const initialFilterParams: FilterParams = {
     priceMax: 0,
     isFreeShipping: false,
     rating: 0,
-    count: 0,
 };

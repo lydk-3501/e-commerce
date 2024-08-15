@@ -2,7 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Range, getTrackBackground } from 'react-range';
 import { ComponentProps } from './price.type';
-import { SLIDER_TRACK_BG, SLIDER_TRACK_HIGHLIGHT } from '@constants/color.constant';
+import {
+    SLIDER_TRACK_BG,
+    SLIDER_TRACK_HIGHLIGHT,
+} from '@constants/color.constant';
 
 const PriceRangeSlider: React.FC<ComponentProps> = ({
     min = 1,
@@ -51,7 +54,11 @@ const PriceRangeSlider: React.FC<ComponentProps> = ({
                         style={{
                             background: getTrackBackground({
                                 values,
-                                colors: [SLIDER_TRACK_BG, SLIDER_TRACK_HIGHLIGHT, SLIDER_TRACK_BG],
+                                colors: [
+                                    SLIDER_TRACK_BG,
+                                    SLIDER_TRACK_HIGHLIGHT,
+                                    SLIDER_TRACK_BG,
+                                ],
                                 min,
                                 max,
                             }),

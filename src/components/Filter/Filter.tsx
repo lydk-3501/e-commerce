@@ -18,11 +18,13 @@ const Filter: React.FC = () => {
 
         if (params.category) searchParams.append('category', params.category);
         if (Array.isArray(params.brand) && params.brand.length > 0) {
-            searchParams.append('brand', params.brand.join(','));
+            params.brand.forEach((brand, index) => {
+                searchParams.append(`brand[${index}]`, brand);
+            });
         }
-        if (params.priceMin)
+        if (params.priceMin && params.priceMin != 1)
             searchParams.append('priceMin', params.priceMin.toString());
-        if (params.priceMax)
+        if (params.priceMax && params.priceMax != 4800)
             searchParams.append('priceMax', params.priceMax.toString());
         if (params.isFreeShipping)
             searchParams.append(
@@ -60,8 +62,8 @@ const Filter: React.FC = () => {
                         setParams={setParams}
                     />
                     <Ratings
-                        rating={params.rating || 0} 
-                        count={12345} 
+                        rating={params.rating || 0}
+                        count={12345}
                         params={params}
                         setParams={setParams}
                     />
