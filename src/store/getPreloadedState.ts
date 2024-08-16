@@ -1,12 +1,7 @@
-import { initialToDoState } from './ToDo/reducer';
 import { PartialRootState } from './configureStore';
 
 const getPreloadedState = (): PartialRootState => {
-    return {
-        ToDo: {
-            ...initialToDoState,
-        },
-    };
+    return {};
 };
 
 export default getPreloadedState;
