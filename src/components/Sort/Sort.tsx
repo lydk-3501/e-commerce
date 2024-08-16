@@ -8,7 +8,6 @@ const Sort: React.FC = () => {
     const [params, setParams] = useState<SortParams>(initialSortParams);
 
     useEffect(() => {
-        // Extract existing filter parameters from the URL
         const urlParams = new URLSearchParams(window.location.search);
         const existingFilterParams: FilterParams = {
             category: urlParams.get('category') || '',
@@ -21,10 +20,8 @@ const Sort: React.FC = () => {
             rating: urlParams.get('rating') ? Number(urlParams.get('rating')) : undefined,
         };
 
-        // Combine existing filter params with new sort params
         const searchParams = new URLSearchParams();
 
-        // Add existing filter parameters
         Object.entries(existingFilterParams).forEach(([key, value]) => {
             if (value !== undefined) {
                 if (Array.isArray(value)) {
@@ -35,7 +32,6 @@ const Sort: React.FC = () => {
             }
         });
 
-        // Add new sort parameters
         if (params.sortBy && params.sortBy !== 'Sort by feature') {
             searchParams.append('sortBy', params.sortBy);
         }
