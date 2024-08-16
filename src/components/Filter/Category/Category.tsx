@@ -1,11 +1,13 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import { RootState } from '@store/configureStore';
 import CategoryMenuItem from './CategoryMenuItem';
-import { CategoryProps } from './category.type';
 import { categoryItems } from '@constants/category.constant';
 
-const Category: React.FC<CategoryProps> = ({ params, setParams }) => {
+const Category: React.FC = () => {
     const { t } = useTranslation();
+    const params = useSelector((state: RootState) => state.filterSlice);
 
     return (
         <div className="flex flex-col w-56 border-t py-8 w-[260px]">
@@ -15,9 +17,9 @@ const Category: React.FC<CategoryProps> = ({ params, setParams }) => {
             {categoryItems.map((item, index) => (
                 <CategoryMenuItem
                     key={index}
-                    {...item}
-                    params={params}
-                    setParams={setParams}
+                    label={item.label}
+                    count={item.count}
+                    childrenItems={item.childrenItems}
                 />
             ))}
         </div>

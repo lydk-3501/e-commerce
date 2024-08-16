@@ -1,36 +1,35 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '@store/configureStore'; 
+import { setCategory } from '@store/filterSlice'; 
 import { ComponentProps } from './category.type';
-import { FilterParams } from '../filter.type';
 
 const CategoryMenuItem: React.FC<ComponentProps> = ({
     label,
     count,
     childrenItems,
-    params,
-    setParams,
 }) => {
     const { t } = useTranslation();
+    const dispatch = useDispatch();
+    const params = useSelector((state: RootState) => state.filterSlice);
     const [isExpanded, setIsExpanded] = useState(false);
-    const [isSelected, setSelected] = useState(false);
+    const isSelected = params.category === label;
 
     useEffect(() => {
-        setSelected(params.category === label);
-    }, [params]);
+        if (params.category !== label) {
+            setIsExpanded(false);
+        }
+    }, [params.category, label]);
 
     const toggleExpand = () => {
-        setIsExpanded(!isExpanded);
+        setIsExpanded(prevState => !prevState);
     };
 
     const handleCategorySelect = () => {
-        setParams((prevParams: FilterParams) => ({
-            ...prevParams,
-            category: label,
-        }));
-        setSelected((prevSelected) => {
-            const newState = !prevSelected;
-            return newState;
-        });
+        if (params.category !== label) {
+            dispatch(setCategory(label));
+        }
         toggleExpand();
     };
 
@@ -43,9 +42,8 @@ const CategoryMenuItem: React.FC<ComponentProps> = ({
                 <div className="flex items-center justify-start h-12">
                     <img
                         className={`h-3 w-3 ${isExpanded ? '' : 'rotate-180'}`}
-                        src="../../../../public/images/toggle-icon.svg"
+                        src="/images/toggle-icon.svg" // Adjust path if necessary
                         alt={t('toggleIconAlt')}
-                        onClick={handleCategorySelect}
                     />
                     <span
                         className={`text-[14.4px] pl-2 truncate ${
@@ -71,8 +69,6 @@ const CategoryMenuItem: React.FC<ComponentProps> = ({
                                 label={child.label}
                                 count={child.count}
                                 childrenItems={child.childrenItems}
-                                params={params}
-                                setParams={setParams}
                             />
                         </div>
                     ))}

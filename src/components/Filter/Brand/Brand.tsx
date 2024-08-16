@@ -3,10 +3,12 @@ import { useTranslation } from 'react-i18next';
 import BrandItem from './BrandItem';
 import BrandSearch from './BrandSearch';
 import { brandItems } from '@constants/brand.constant';
-import { BrandProps } from './brand.type';
+import { useSelector } from 'react-redux';
+import { RootState } from '@store/configureStore';
 
-const Brand: React.FC<BrandProps> = ({ params, setParams }) => {
+const Brand: React.FC = () => {
     const { t } = useTranslation();
+    const params = useSelector((state: RootState) => state.filterSlice);
 
     return (
         <div className="brand-menu border-t py-8 w-[260px]">
@@ -22,7 +24,6 @@ const Brand: React.FC<BrandProps> = ({ params, setParams }) => {
                         key={index}
                         {...item}
                         params={params}
-                        setParams={setParams}
                     />
                 ))}
             </div>

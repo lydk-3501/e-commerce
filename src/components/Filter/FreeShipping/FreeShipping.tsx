@@ -1,27 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { ComponentProps } from './freeship.type';
+import { useDispatch, useSelector } from 'react-redux';
+import { setFilterParams } from '@store/filterSlice';
+import { RootState } from '@store/configureStore';
 import { FilterParams } from '../filter.type';
 
-const FreeShipping: React.FC<ComponentProps> = ({ params, setParams }) => {
+const FreeShipping: React.FC = () => {
     const { t } = useTranslation();
+    const dispatch = useDispatch();
 
-    const [isFreeShipping, setIsFreeShipping] = useState<boolean>(
-        params.isFreeShipping
-    );
+    const params = useSelector((state: RootState) => state.filterSlice);
 
     const handleToggle = () => {
-        const newValue = !isFreeShipping;
-        setParams((prevParams: FilterParams) => ({
-            ...prevParams,
+        const newValue = !params.isFreeShipping;
+        const updatedParams: FilterParams = {
+            ...params,
             isFreeShipping: newValue,
-        }));
-        setIsFreeShipping(newValue);
+        };
+        dispatch(setFilterParams(updatedParams));
     };
-
-    useEffect(() => {
-        setIsFreeShipping(params.isFreeShipping);
-    }, [params.isFreeShipping]);
 
     return (
         <div className="w-[260px] border-t py-8">
@@ -32,16 +29,16 @@ const FreeShipping: React.FC<ComponentProps> = ({ params, setParams }) => {
                 <span className="toggle-label text-sm">
                     {t('freeshippingToggleLabel')}
                 </span>
-                <span className="text-xs">{isFreeShipping ? 'Yes' : 'No'}</span>
+                <span className="text-xs">{params.isFreeShipping ? 'Yes' : 'No'}</span>
                 <div
                     className={`cursor-pointer h-[16px] ml-1 w-[30px] rounded-full flex justify-items-between ${
-                        isFreeShipping ? 'bg-yellow-500' : 'bg-gray-300'
+                        params.isFreeShipping ? 'bg-yellow-500' : 'bg-gray-300'
                     }`}
                     onClick={handleToggle}
                 >
                     <div
                         className={`bg-white w-[16px] h-[16px] rounded-full shadow-md transform transition-transform duration-300 ${
-                            isFreeShipping
+                            params.isFreeShipping
                                 ? 'translate-x-[14px]'
                                 : 'translate-x-0'
                         }`}

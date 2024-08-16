@@ -1,31 +1,35 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { IoMdStar } from 'react-icons/io';
-import { ComponentProps } from './rating.type';
+import { useDispatch, useSelector } from 'react-redux';
+import { setFilterParams } from '@store/filterSlice';
+import { RootState } from '@store/configureStore';
 import { ratingNumbers } from '@constants/ratings.constant';
 
-const Ratings: React.FC<ComponentProps> = ({ count, params, setParams }) => {
+const Ratings: React.FC<{ count: number }> = ({ count }) => {
     const { t } = useTranslation();
-    const [selectedRating, setSelectedRating] = useState<number | null>(
-        params.rating || null
-    );
+    const dispatch = useDispatch();
+    const params = useSelector((state: RootState) => state.filterSlice);
 
     const handleRatingSelect = (rating: number) => {
-        setSelectedRating(rating);
-        setParams((prevParams) => ({
-            ...prevParams,
+        dispatch(setFilterParams({
+            ...params,
             rating: rating,
         }));
     };
 
     useEffect(() => {
+        // Reset the selected rating when params.rating is 0
         if (params.rating === 0) {
-            setSelectedRating(null);
+            dispatch(setFilterParams({
+                ...params,
+                rating: null,
+            }));
         }
-    }, [params.rating]);
+    }, [params.rating, dispatch]);
 
     const renderStars = (rating: number) => {
-        const isSelected = selectedRating === rating;
+        const isSelected = params.rating === rating;
         return (
             <button
                 key={rating}
