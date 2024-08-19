@@ -1,20 +1,17 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '@store/configureStore'; 
-import { toggleBrand } from '@store/filterSlice'; 
+import { RootState } from '@store/configureStore';
+import { toggleBrand } from '@store/filterSlice';
 import { ComponentProps } from './brand.type';
 
-const BrandItem: React.FC<ComponentProps> = ({
-    label,
-    count,
-    value,
-}) => {
+const BrandItem: React.FC<ComponentProps> = ({ label, count, value }) => {
     const dispatch = useDispatch();
     const params = useSelector((state: RootState) => state.filterSlice);
-    const isSelected = Array.isArray(params.brand) && params.brand.includes(value);
+    const isSelected =
+        Array.isArray(params.brand) && params.brand.includes(value);
 
     const handleBrandSelect = () => {
-        dispatch(toggleBrand(value)); 
+        dispatch(toggleBrand(value));
     };
 
     return (

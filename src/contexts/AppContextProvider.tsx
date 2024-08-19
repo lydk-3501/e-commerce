@@ -13,7 +13,7 @@ export const AppContext = createContext<AppContextValue>(null);
 const AppContextProvider: React.FC<AppContextProviderProps> = ({
     children,
 }: AppContextProviderProps) => {
-    const [value, setValue] = useState<AppContextValue>({
+    const [value] = useState<AppContextValue>({
         darkMode: false,
     });
 

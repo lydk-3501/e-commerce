@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '@store/configureStore'; 
-import { setCategory } from '@store/filterSlice'; 
+import { RootState } from '@store/configureStore';
+import { setCategory } from '@store/filterSlice';
 import { ComponentProps } from './category.type';
 
 const CategoryMenuItem: React.FC<ComponentProps> = ({
@@ -23,7 +23,7 @@ const CategoryMenuItem: React.FC<ComponentProps> = ({
     }, [params.category, label]);
 
     const toggleExpand = () => {
-        setIsExpanded(prevState => !prevState);
+        setIsExpanded((prevState) => !prevState);
     };
 
     const handleCategorySelect = () => {

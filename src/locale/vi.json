@@ -13,6 +13,8 @@
       "freeshippingHeader": "Miễn phí giao hàng",
       "freeshippingToggleLabel": "Chỉ hiển thị những sản phẩm được miễn phí giao hàng",
       "ratingHeader": "Đánh giá",
-      "hitsPerPages": " sản phẩm /trang"
+      "hitsPerPages": " sản phẩm /trang",
+      "yes" : "Có",
+      "no" : "Không"
     }
   }
