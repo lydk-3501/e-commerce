@@ -2,6 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { setFilterParams } from '@store/filterSlice';
+import { fetchProducts, fetchItemsByFreeShipping } from '@store/Items/thunks';
 import { RootState } from '@store/configureStore';
 import { FilterParams } from '../filter.type';
 
@@ -18,6 +19,12 @@ const FreeShipping: React.FC = () => {
             isFreeShipping: newValue,
         };
         dispatch(setFilterParams(updatedParams));
+        
+        if (newValue) {
+            dispatch(fetchItemsByFreeShipping());
+        } else {
+            dispatch(fetchProducts());
+        }
     };
 
     return (

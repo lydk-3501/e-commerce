@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setFilterParams } from '@store/filterSlice';
 import { RootState } from '@store/configureStore';
 import { ratingNumbers } from '@constants/ratings.constant';
+import { fetchItemsByRating } from '@store/Items/thunks';
 
 const Ratings: React.FC<{ count: number }> = ({ count }) => {
     const { t } = useTranslation();
@@ -12,13 +13,19 @@ const Ratings: React.FC<{ count: number }> = ({ count }) => {
     const params = useSelector((state: RootState) => state.filterSlice);
 
     const handleRatingSelect = (rating: number) => {
-        dispatch(
-            setFilterParams({
-                ...params,
-                rating: rating,
-            })
-        );
+        // Set the rating in the filter params
+        dispatch(setFilterParams({ ...params, rating }));
+        
+        // Fetch items by selected rating
+        dispatch(fetchItemsByRating(rating));
     };
+
+    useEffect(() => {
+        // Reset the selected rating when params.rating is 0
+        if (params.rating === 0) {
+            dispatch(setFilterParams({ ...params, rating: null }));
+        }
+    }, [params.rating, dispatch]);
 
     useEffect(() => {
         // Reset the selected rating when params.rating is 0
