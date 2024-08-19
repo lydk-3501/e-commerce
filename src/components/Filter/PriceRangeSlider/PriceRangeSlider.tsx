@@ -1,37 +1,40 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Range, getTrackBackground } from 'react-range';
-import { ComponentProps } from './price.type';
-import { SLIDER_TRACK_BG, SLIDER_TRACK_HIGHLIGHT } from '@constants/color.constant';
+import { useDispatch, useSelector } from 'react-redux';
+import { setFilterParams } from '@store/filterSlice';
+import { RootState } from '@store/configureStore';
+import {
+    SLIDER_TRACK_BG,
+    SLIDER_TRACK_HIGHLIGHT,
+} from '@constants/color.constant';
 
-const PriceRangeSlider: React.FC<ComponentProps> = ({
+const PriceRangeSlider: React.FC<{ min?: number; max?: number }> = ({
     min = 1,
     max = 4800,
-    params,
-    setParams,
 }) => {
     const { t } = useTranslation();
+    const dispatch = useDispatch();
+    const params = useSelector((state: RootState) => state.filterSlice);
 
-    const [values, setValues] = useState<number[]>([
+    const [values, setValues] = React.useState<number[]>([
         params.priceMin || min,
         params.priceMax || max,
     ]);
-
-    const handleChange = (values: number[]) => {
-        setValues(values);
-    };
 
     useEffect(() => {
         setValues([params.priceMin || min, params.priceMax || max]);
     }, [params.priceMin, params.priceMax, min, max]);
 
     useEffect(() => {
-        setParams((prevParams) => ({
-            ...prevParams,
-            priceMin: values[0],
-            priceMax: values[1],
-        }));
-    }, [values[0], values[1], setParams]);
+        if (values[0] !== params.priceMin || values[1] !== params.priceMax) {
+            dispatch(setFilterParams({
+                ...params,
+                priceMin: values[0],
+                priceMax: values[1],
+            }));
+        }
+    }, [values, dispatch, params.priceMin, params.priceMax]);
 
     return (
         <div className="w-[260px] border-t py-8">
@@ -43,7 +46,7 @@ const PriceRangeSlider: React.FC<ComponentProps> = ({
                 min={min}
                 max={max}
                 values={values}
-                onChange={handleChange}
+                onChange={setValues}
                 renderTrack={({ props, children }) => (
                     <div
                         {...props}
@@ -51,7 +54,11 @@ const PriceRangeSlider: React.FC<ComponentProps> = ({
                         style={{
                             background: getTrackBackground({
                                 values,
-                                colors: [SLIDER_TRACK_BG, SLIDER_TRACK_HIGHLIGHT, SLIDER_TRACK_BG],
+                                colors: [
+                                    SLIDER_TRACK_BG,
+                                    SLIDER_TRACK_HIGHLIGHT,
+                                    SLIDER_TRACK_BG,
+                                ],
                                 min,
                                 max,
                             }),

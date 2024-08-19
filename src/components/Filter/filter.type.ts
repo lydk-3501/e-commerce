@@ -5,19 +5,17 @@ export interface FilterParams {
     priceMax: number;
     isFreeShipping: boolean;
     rating: number;
-    count: number;
 }
 
 export interface ClearFilterProps {
-    setParams: React.Dispatch<React.SetStateAction<FilterParams>>;
+    onClick: () => void;
 }
 
 export const initialFilterParams: FilterParams = {
-    category: '',
+    category: null,
     brand: [] as string[],
     priceMin: 0,
     priceMax: 0,
-    isFreeShipping: false,
+    isFreeShipping: null,
     rating: 0,
-    count: 0,
 };
