@@ -5,5 +5,7 @@ import filterSlice from './filterSlice';
 import sortSlice from './sortSlice';
 
 export default combineReducers({
-    Items, filterSlice, sortSlice,
+    Items,
+    filterSlice,
+    sortSlice,
 });

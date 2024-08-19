@@ -29,7 +29,9 @@ const FreeShipping: React.FC = () => {
                 <span className="toggle-label text-sm">
                     {t('freeshippingToggleLabel')}
                 </span>
-                <span className="text-xs">{params.isFreeShipping ? 'Yes' : 'No'}</span>
+                <span className="text-xs">
+                    {params.isFreeShipping ? t('yes') : t('no')}
+                </span>
                 <div
                     className={`cursor-pointer h-[16px] ml-1 w-[30px] rounded-full flex justify-items-between ${
                         params.isFreeShipping ? 'bg-yellow-500' : 'bg-gray-300'

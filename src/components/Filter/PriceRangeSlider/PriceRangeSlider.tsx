@@ -28,11 +28,13 @@ const PriceRangeSlider: React.FC<{ min?: number; max?: number }> = ({
 
     useEffect(() => {
         if (values[0] !== params.priceMin || values[1] !== params.priceMax) {
-            dispatch(setFilterParams({
-                ...params,
-                priceMin: values[0],
-                priceMax: values[1],
-            }));
+            dispatch(
+                setFilterParams({
+                    ...params,
+                    priceMin: values[0],
+                    priceMax: values[1],
+                })
+            );
         }
     }, [values, dispatch, params.priceMin, params.priceMax]);
 

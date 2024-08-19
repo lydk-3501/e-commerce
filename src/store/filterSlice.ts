@@ -37,5 +37,6 @@ const filterSlice = createSlice({
     },
 });
 
-export const { setFilterParams, toggleBrand, clearFilters, setCategory } = filterSlice.actions;
+export const { setFilterParams, toggleBrand, clearFilters, setCategory } =
+    filterSlice.actions;
 export default filterSlice.reducer;

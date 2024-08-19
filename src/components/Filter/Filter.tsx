@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { setFilterParams, clearFilters } from '@store/filterSlice';
 import { RootState } from '@store/configureStore';
 import ClearFilter from './ClearFilter';
@@ -10,6 +11,7 @@ import PriceRangeSlider from './PriceRangeSlider/PriceRangeSlider';
 import Ratings from './Ratings/Ratings';
 
 const Filter: React.FC = () => {
+    const { t } = useTranslation();
     const dispatch = useDispatch();
     const params = useSelector((state: RootState) => state.filterSlice);
 
@@ -42,7 +44,10 @@ const Filter: React.FC = () => {
         if (params.priceMax && params.priceMax !== 4800)
             searchParams.append('priceMax', params.priceMax.toString());
         if (params.isFreeShipping)
-            searchParams.append('isFreeShipping', params.isFreeShipping.toString());
+            searchParams.append(
+                'isFreeShipping',
+                params.isFreeShipping.toString()
+            );
         if (params.rating)
             searchParams.append('rating', params.rating.toString());
 
@@ -76,7 +81,7 @@ const Filter: React.FC = () => {
             <section className="container-filter">
                 <div className="container-header h-[60px] items-center flex justify-between w-[260px]">
                     <h2 className="text-2xl font-hind font-semibold">
-                        Filter
+                        {t('containerHeader')}
                     </h2>
                     <ClearFilter onClick={() => dispatch(clearFilters())} />
                 </div>
@@ -85,7 +90,7 @@ const Filter: React.FC = () => {
                     <Brand />
                     <PriceRangeSlider />
                     <FreeShipping />
-                    <Ratings count={12345}/>
+                    <Ratings count={12345} />
                 </div>
             </section>
         </div>

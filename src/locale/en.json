@@ -13,6 +13,8 @@
       "freeshippingHeader": "Free Shipping",
       "freeshippingToggleLabel": "Display only items with free shipping",
       "ratingHeader": "Ratings",
-      "hitsPerPages": "hits per pages"
+      "hitsPerPages": "hits per pages",
+      "yes" : "Yes",
+      "no" : "No"
     }
 }

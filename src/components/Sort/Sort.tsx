@@ -14,10 +14,16 @@ const Sort: React.FC = () => {
             brand: Array.from(urlParams.entries())
                 .filter(([key]) => key.startsWith('brand['))
                 .map(([, value]) => value),
-            priceMin: urlParams.get('priceMin') ? Number(urlParams.get('priceMin')) : undefined,
-            priceMax: urlParams.get('priceMax') ? Number(urlParams.get('priceMax')) : undefined,
+            priceMin: urlParams.get('priceMin')
+                ? Number(urlParams.get('priceMin'))
+                : undefined,
+            priceMax: urlParams.get('priceMax')
+                ? Number(urlParams.get('priceMax'))
+                : undefined,
             isFreeShipping: urlParams.get('isFreeShipping') === 'true',
-            rating: urlParams.get('rating') ? Number(urlParams.get('rating')) : undefined,
+            rating: urlParams.get('rating')
+                ? Number(urlParams.get('rating'))
+                : undefined,
         };
 
         const searchParams = new URLSearchParams();
@@ -25,7 +31,9 @@ const Sort: React.FC = () => {
         Object.entries(existingFilterParams).forEach(([key, value]) => {
             if (value !== undefined) {
                 if (Array.isArray(value)) {
-                    value.forEach((val, index) => searchParams.append(`${key}[${index}]`, val));
+                    value.forEach((val, index) =>
+                        searchParams.append(`${key}[${index}]`, val)
+                    );
                 } else {
                     searchParams.append(key, value.toString());
                 }

@@ -1,24 +1,36 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ComponentProps } from './hitPerPages.type';
+import { useDispatch } from 'react-redux';
 import { hitsOptions } from '@constants/sort.constant';
+import { ComponentProps } from './hitPerPages.type';
+import { setSortParams } from '@store/sortSlice';
+import { HitsCriteria } from '@store/Items/selectors';
 
 const HitsPerPage: React.FC<ComponentProps> = ({ params, setParams }) => {
     const { t } = useTranslation();
+    const dispatch = useDispatch();
     const [isOpen, setIsOpen] = useState(false);
-    const [selectedOption, setSelectedOption] = useState(params.hitsPerPages);
+
+    const selectedOption: HitsCriteria = params.hitsPerPages;
 
     const toggleDropdown = () => {
         setIsOpen(!isOpen);
     };
 
-    const handleOptionClick = (option: number) => {
-        setSelectedOption(option);
+    const handleOptionClick = (option: HitsCriteria) => {
         setIsOpen(false);
         setParams((prevParams) => ({
             ...prevParams,
             hitsPerPages: option,
         }));
+
+        dispatch(
+            setSortParams({
+                sortBy: params.sortBy,
+                hitsPerPages: option,
+                page: params.page,
+            })
+        );
     };
 
     return (
@@ -40,7 +52,9 @@ const HitsPerPage: React.FC<ComponentProps> = ({ params, setParams }) => {
                         <a
                             key={index}
                             className="block px-4 py-3 text-black hover:bg-gray-100 cursor-pointer"
-                            onClick={() => handleOptionClick(option)}
+                            onClick={() =>
+                                handleOptionClick(option as HitsCriteria)
+                            }
                         >
                             {option} {t('hitsPerPages')}
                         </a>

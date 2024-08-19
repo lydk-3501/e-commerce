@@ -20,11 +20,7 @@ const Brand: React.FC = () => {
             <BrandSearch />
             <div>
                 {brandItems.map((item, index) => (
-                    <BrandItem
-                        key={index}
-                        {...item}
-                        params={params}
-                    />
+                    <BrandItem key={index} {...item} params={params} />
                 ))}
             </div>
         </div>

@@ -1,15 +1,15 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { fetchProducts } from './thunks';
-// import { ItemProps } from '@components/Item/item.type';
+import { ItemProps } from '@components/Item/item.type';
 
 interface ItemsState {
-    // items: ItemProps[];
+    items: ItemProps[];
     loading: boolean;
     error: string | null;
 }
 
 const initialState: ItemsState = {
-    // items: [],
+    items: [],
     loading: false,
     error: null,
 };
@@ -24,10 +24,13 @@ const itemsSlice = createSlice({
                 state.loading = true;
                 state.error = null;
             })
-            // .addCase(fetchProducts.fulfilled, (state, action: PayloadAction<ItemProps[]>) => {
-            //     state.items = action.payload;
-            //     state.loading = false;
-            // })
+            .addCase(
+                fetchProducts.fulfilled,
+                (state, action: PayloadAction<ItemProps[]>) => {
+                    state.items = action.payload;
+                    state.loading = false;
+                }
+            )
             .addCase(fetchProducts.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error.message || 'Failed to fetch items';

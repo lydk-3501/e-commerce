@@ -12,19 +12,23 @@ const Ratings: React.FC<{ count: number }> = ({ count }) => {
     const params = useSelector((state: RootState) => state.filterSlice);
 
     const handleRatingSelect = (rating: number) => {
-        dispatch(setFilterParams({
-            ...params,
-            rating: rating,
-        }));
+        dispatch(
+            setFilterParams({
+                ...params,
+                rating: rating,
+            })
+        );
     };
 
     useEffect(() => {
         // Reset the selected rating when params.rating is 0
         if (params.rating === 0) {
-            dispatch(setFilterParams({
-                ...params,
-                rating: null,
-            }));
+            dispatch(
+                setFilterParams({
+                    ...params,
+                    rating: null,
+                })
+            );
         }
     }, [params.rating, dispatch]);
 

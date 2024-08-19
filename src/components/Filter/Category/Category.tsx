@@ -1,13 +1,13 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
-import { RootState } from '@store/configureStore';
+// import { useSelector } from 'react-redux';
+// import { RootState } from '@store/configureStore';
 import CategoryMenuItem from './CategoryMenuItem';
 import { categoryItems } from '@constants/category.constant';
 
 const Category: React.FC = () => {
     const { t } = useTranslation();
-    const params = useSelector((state: RootState) => state.filterSlice);
+    // const params = useSelector((state: RootState) => state.filterSlice);
 
     return (
         <div className="flex flex-col w-56 border-t py-8 w-[260px]">

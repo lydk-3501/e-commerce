@@ -1,24 +1,38 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
 import { ComponentProps } from './sortBy.type';
 import { sortByOptions } from '@constants/sort.constant';
+import { SortCriteria } from '@store/Items/selectors';
+import { setSortParams } from '@store/sortSlice';
 
 const SortBy: React.FC<ComponentProps> = ({ params, setParams }) => {
     const { t } = useTranslation();
+    const dispatch = useDispatch();
     const [isOpen, setIsOpen] = useState(false);
-    const [selectedOption, setSelectedOption] = useState(params.sortBy);
+    const [selectedOption, setSelectedOption] = useState<SortCriteria>(
+        params.sortBy
+    );
 
     const toggleDropdown = () => {
         setIsOpen(!isOpen);
     };
 
-    const handleOptionClick = (option: string) => {
+    const handleOptionClick = (option: SortCriteria) => {
         setSelectedOption(option);
         setIsOpen(false);
         setParams((prevParams) => ({
             ...prevParams,
             sortBy: option,
         }));
+
+        dispatch(
+            setSortParams({
+                sortBy: option,
+                hitsPerPages: params.hitsPerPages,
+                page: params.page,
+            })
+        );
     };
 
     return (
@@ -40,7 +54,9 @@ const SortBy: React.FC<ComponentProps> = ({ params, setParams }) => {
                         <a
                             key={index}
                             className="block px-4 py-3 text-black hover:bg-gray-100 cursor-pointer"
-                            onClick={() => handleOptionClick(option)}
+                            onClick={() =>
+                                handleOptionClick(option as SortCriteria)
+                            }
                         >
                             {option}
                         </a>
