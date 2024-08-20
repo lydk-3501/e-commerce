@@ -55,26 +55,26 @@ const Filter: React.FC = () => {
         window.history.replaceState({}, '', newUrl);
     }, [params]);
 
-    useEffect(() => {
-        const handlePopState = () => {
-            const searchParams = new URLSearchParams(window.location.search);
-            const updatedParams = {
-                category: searchParams.get('category') || '',
-                brand: searchParams.getAll('brand') || [],
-                priceMin: parseInt(searchParams.get('priceMin') || '1', 10),
-                priceMax: parseInt(searchParams.get('priceMax') || '4800', 10),
-                isFreeShipping: searchParams.get('isFreeShipping') === 'true',
-                rating: parseInt(searchParams.get('rating') || '0', 10),
-            };
+    // useEffect(() => {
+    //     const handlePopState = () => {
+    //         const searchParams = new URLSearchParams(window.location.search);
+    //         const updatedParams = {
+    //             category: searchParams.get('category') || '',
+    //             brand: searchParams.getAll('brand') || [],
+    //             priceMin: parseInt(searchParams.get('priceMin') || '1', 10),
+    //             priceMax: parseInt(searchParams.get('priceMax') || '4800', 10),
+    //             isFreeShipping: searchParams.get('isFreeShipping') === 'true',
+    //             rating: parseInt(searchParams.get('rating') || '0', 10),
+    //         };
 
-            dispatch(setFilterParams(updatedParams));
-        };
+    //         dispatch(setFilterParams(updatedParams));
+    //     };
 
-        window.addEventListener('popstate', handlePopState);
-        return () => {
-            window.removeEventListener('popstate', handlePopState);
-        };
-    }, [dispatch]);
+    //     window.addEventListener('popstate', handlePopState);
+    //     return () => {
+    //         window.removeEventListener('popstate', handlePopState);
+    //     };
+    // }, [dispatch]);
 
     return (
         <div className="container-wrapper w-[320px]">
@@ -90,7 +90,7 @@ const Filter: React.FC = () => {
                     <Brand />
                     <PriceRangeSlider />
                     <FreeShipping />
-                    <Ratings count={12345} />
+                    <Ratings />
                 </div>
             </section>
         </div>

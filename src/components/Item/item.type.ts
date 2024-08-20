@@ -1,5 +1,6 @@
 export interface ItemProps {
     name: string;
+    brand: string;
     description: string;
     categories: string[];
     hierarchicalCategories: {

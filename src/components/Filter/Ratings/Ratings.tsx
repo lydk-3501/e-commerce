@@ -7,54 +7,36 @@ import { RootState } from '@store/configureStore';
 import { ratingNumbers } from '@constants/ratings.constant';
 import { fetchItemsByRating } from '@store/Items/thunks';
 
-const Ratings: React.FC<{ count: number }> = ({ count }) => {
+const Ratings: React.FC = () => {
     const { t } = useTranslation();
     const dispatch = useDispatch();
     const params = useSelector((state: RootState) => state.filterSlice);
+    const ratingCounts = useSelector((state: RootState) => state.Items.ratingCounts);
 
     const handleRatingSelect = (rating: number) => {
-        // Set the rating in the filter params
         dispatch(setFilterParams({ ...params, rating }));
-        
-        // Fetch items by selected rating
         dispatch(fetchItemsByRating(rating));
     };
 
     useEffect(() => {
-        // Reset the selected rating when params.rating is 0
-        if (params.rating === 0) {
-            dispatch(setFilterParams({ ...params, rating: null }));
-        }
-    }, [params.rating, dispatch]);
-
-    useEffect(() => {
-        // Reset the selected rating when params.rating is 0
-        if (params.rating === 0) {
-            dispatch(
-                setFilterParams({
-                    ...params,
-                    rating: null,
-                })
-            );
-        }
-    }, [params.rating, dispatch]);
+        ratingNumbers.forEach((rating) => {
+            dispatch(fetchItemsByRating(rating));
+        });
+    }, [dispatch]);
 
     const renderStars = (rating: number) => {
         const isSelected = params.rating === rating;
+        const count = ratingCounts[rating] || 0; 
         return (
             <button
                 key={rating}
                 onClick={() => handleRatingSelect(rating)}
-                className={`flex text-[26px] mb-2 ${
-                    !isSelected ? 'opacity-60' : ''
-                }`}
+                className={`flex text-[26px] mb-2 ${!isSelected ? 'opacity-60' : ''}`}
             >
                 {Array.from({ length: 5 }, (_, index) => (
                     <IoMdStar
                         key={index}
-                        className={`mr-1 ${
-                            index < rating ? 'text-yellow-500' : 'text-gray-300'
-                        }`}
+                        className={`mr-1 ${index < rating ? 'text-yellow-500' : 'text-gray-300'}`}
                     />
                 ))}
                 <span className="brand-item-count bg-gray-300 font-bold ml-2 mt-[6px] px-1 rounded tracking-[1.1px] text-[0.64rem] text-gray-600">

@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@store/configureStore';
 import { setCategory } from '@store/filterSlice';
 import { ComponentProps } from './category.type';
+import { fetchItemsByCategories } from '@store/Items/thunks';
 
 const CategoryMenuItem: React.FC<ComponentProps> = ({
     label,
@@ -13,8 +14,15 @@ const CategoryMenuItem: React.FC<ComponentProps> = ({
     const { t } = useTranslation();
     const dispatch = useDispatch();
     const params = useSelector((state: RootState) => state.filterSlice);
+    const categoriesState = useSelector((state: RootState) => state.Items);
     const [isExpanded, setIsExpanded] = useState(false);
     const isSelected = params.category === label;
+
+    // useEffect(() => {
+    //     if (isExpanded && childrenItems.length === 0) {
+    //         dispatch(fetchItemsByCategories());
+    //     }
+    // }, [isExpanded, label, dispatch]);
 
     useEffect(() => {
         if (params.category !== label) {
@@ -42,7 +50,7 @@ const CategoryMenuItem: React.FC<ComponentProps> = ({
                 <div className="flex items-center justify-start h-12">
                     <img
                         className={`h-3 w-3 ${isExpanded ? '' : 'rotate-180'}`}
-                        src="/images/toggle-icon.svg" // Adjust path if necessary
+                        src="/images/toggle-icon.svg" 
                         alt={t('toggleIconAlt')}
                     />
                     <span

@@ -10,7 +10,9 @@ interface FilterParams {
     rating: number;
 }
 
-const initialState: FilterParams = initialFilterParams;
+const initialState: FilterParams = {
+    ...initialFilterParams,
+};
 
 const filterSlice = createSlice({
     name: 'filter',
