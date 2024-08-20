@@ -34,7 +34,7 @@ const Item: React.FC<ItemProps> = ({
                 </h1>
                 <a
                     className="item-description break-words mb-3 text-sm"
-                    cata-tooltip-id="item-description"
+                    data-tooltip-id="item-description"
                     data-tooltip-content={description}
                 >
                     {truncatedDescription}

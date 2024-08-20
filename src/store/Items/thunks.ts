@@ -20,6 +20,7 @@ export const fetchItemsByCategories = createAsyncThunk<ItemProps[], string>(
             throw new Error('Failed to fetch items');
         }
         const data = await response.json();
+        console.log(data);
         return data as ItemProps[];
     }
 );
@@ -57,9 +58,10 @@ export const fetchItemsByRating = createAsyncThunk<
 export const fetchItemsByPriceRange = createAsyncThunk<
     ItemProps[],
     { priceMin: number; priceMax: number }
+
 >('items/fetchByPriceRange', async ({ priceMin, priceMax }) => {
     const response = await fetch(
-        `${BASE_URL}/items?priceMin=${priceMin}&priceMax=${priceMax}`
+        `${BASE_URL}?priceMin=${priceMin}&priceMax=${priceMax}`
     );
     const data = await response.json();
     return data as ItemProps[];
