@@ -5,28 +5,50 @@ import { RootState } from '@store/configureStore';
 import { selectSortedItems } from '@store/Items/selectors';
 import Item from './Item';
 import Pagination from '@components/Pagination/Pagination';
+import lunr from 'lunr';
+import { setLunrIndex } from '@store/Items/reducer';
 
 const ItemList: React.FC = () => {
     const dispatch = useDispatch();
-    const { items, loading, error } = useSelector(
+    const { items, searchResults, lunrIndex, loading, error } = useSelector(
         (state: RootState) => state.Items
     );
 
+    const sortBy = useSelector((state: RootState) => state.sortSlice.sortBy);
     const itemsPerPage = useSelector(
         (state: RootState) => state.sortSlice.hitsPerPages
     );
-    const sortBy = useSelector((state: RootState) => state.sortSlice.sortBy);
-    const sortedItems = useSelector((state: RootState) =>
-        selectSortedItems(state, sortBy)
-    );
-    const [currentPage, setCurrentPage] = useState(1);
 
     useEffect(() => {
         dispatch(fetchProducts());
     }, [dispatch]);
 
-    const totalPages = Math.ceil(items.length / itemsPerPage);
+    useEffect(() => {
+        if (items.length > 0) {
+            const index = lunr(function () {
+                this.ref('objectID');
+                this.field('name');
+                this.field('description');
+                this.field('categories');
+                this.field('type');
+                items.forEach((doc) => this.add(doc));
+            });
+            dispatch(setLunrIndex(index));
+        }
+    }, [items, dispatch]);
 
+    const [currentPage, setCurrentPage] = useState(1);
+
+    const baseItems = searchResults.length > 0 ? searchResults : items;
+
+    const sortedItems = useSelector((state: RootState) =>
+        selectSortedItems(
+            { ...state, Items: { ...state.Items, items: baseItems } },
+            sortBy
+        )
+    );
+
+    const totalPages = Math.ceil(sortedItems.length / itemsPerPage);
     const startIndex = (currentPage - 1) * itemsPerPage;
     const currentItems = sortedItems.slice(
         startIndex,

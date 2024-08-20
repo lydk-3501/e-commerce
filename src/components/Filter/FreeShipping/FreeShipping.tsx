@@ -19,7 +19,7 @@ const FreeShipping: React.FC = () => {
             isFreeShipping: newValue,
         };
         dispatch(setFilterParams(updatedParams));
-        
+
         if (newValue) {
             dispatch(fetchItemsByFreeShipping());
         } else {

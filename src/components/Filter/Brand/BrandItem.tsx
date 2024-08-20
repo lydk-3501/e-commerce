@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@store/configureStore';
 import { toggleBrand } from '@store/filterSlice';
 import { ComponentProps } from './brand.type';
-
+import { fetchItemsByBrand } from '@store/Items/thunks';
 const BrandItem: React.FC<ComponentProps> = ({ label, count, value }) => {
     const dispatch = useDispatch();
     const params = useSelector((state: RootState) => state.filterSlice);
@@ -12,6 +12,9 @@ const BrandItem: React.FC<ComponentProps> = ({ label, count, value }) => {
 
     const handleBrandSelect = () => {
         dispatch(toggleBrand(value));
+        if (!isSelected) {
+            dispatch(fetchItemsByBrand(value));
+        }
     };
 
     return (

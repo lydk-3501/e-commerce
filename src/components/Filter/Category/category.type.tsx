@@ -1,7 +1,5 @@
 interface MenuItem {
     label: string;
-    count: string;
-    childrenItems?: MenuItem[];
 }
 
 export interface ComponentProps {

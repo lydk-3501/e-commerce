@@ -22,4 +22,8 @@ export interface ItemProps {
             matchLevel: string;
         };
     };
+    highlight?: {
+        name: React.ReactNode;
+        description: React.ReactNode;
+    };
 }

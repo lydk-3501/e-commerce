@@ -6,7 +6,7 @@ export interface BrandProps {
 }
 export interface ComponentProps {
     label: string;
-    count: string;
+    count: number;
     value: string;
     params: FilterParams;
 }

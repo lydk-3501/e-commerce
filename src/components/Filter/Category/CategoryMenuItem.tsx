@@ -18,11 +18,11 @@ const CategoryMenuItem: React.FC<ComponentProps> = ({
     const [isExpanded, setIsExpanded] = useState(false);
     const isSelected = params.category === label;
 
-    // useEffect(() => {
-    //     if (isExpanded && childrenItems.length === 0) {
-    //         dispatch(fetchItemsByCategories());
-    //     }
-    // }, [isExpanded, label, dispatch]);
+    useEffect(() => {
+        if (isExpanded && childrenItems.length === 0) {
+            dispatch(fetchItemsByCategories(label));
+        }
+    }, [isExpanded, label, dispatch]);
 
     useEffect(() => {
         if (params.category !== label) {
@@ -50,7 +50,7 @@ const CategoryMenuItem: React.FC<ComponentProps> = ({
                 <div className="flex items-center justify-start h-12">
                     <img
                         className={`h-3 w-3 ${isExpanded ? '' : 'rotate-180'}`}
-                        src="/images/toggle-icon.svg" 
+                        src="/images/toggle-icon.svg"
                         alt={t('toggleIconAlt')}
                     />
                     <span
@@ -68,15 +68,15 @@ const CategoryMenuItem: React.FC<ComponentProps> = ({
             {childrenItems && (
                 <div
                     className={`overflow-hidden duration-300 ease-out transition-max-height ${
-                        isExpanded ? 'max-h-[160px]' : 'max-h-0'
+                        isExpanded ? 'max-h-[460px]' : 'max-h-0'
                     }`}
                 >
                     {childrenItems.map((child, index) => (
                         <div className="pl-4" key={index}>
                             <CategoryMenuItem
                                 label={child.label}
-                                count={child.count}
-                                childrenItems={child.childrenItems}
+                                count="123"
+                                // childrenItems={child.childrenItems}
                             />
                         </div>
                     ))}

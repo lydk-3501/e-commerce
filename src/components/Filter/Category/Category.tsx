@@ -18,7 +18,7 @@ const Category: React.FC = () => {
                 <CategoryMenuItem
                     key={index}
                     label={item.label}
-                    count={item.count}
+                    count="123"
                     childrenItems={item.childrenItems}
                 />
             ))}

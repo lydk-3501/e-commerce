@@ -1,14 +1,23 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { fetchProducts, fetchItemsByFreeShipping, fetchItemsByRating, fetchItemsByCategories, fetchItemsByBrand } from './thunks';
+import {
+    fetchProducts,
+    fetchItemsByFreeShipping,
+    fetchItemsByRating,
+    fetchItemsByCategories,
+    fetchItemsByBrand,
+} from './thunks';
 import { ItemProps } from '@components/Item/item.type';
 import { FetchItemsByRatingResult, FetchItemsByBrandResult } from './thunks';
+import lunr from 'lunr';
 
 interface ItemsState {
     items: ItemProps[];
     loading: boolean;
     error: string | null;
     ratingCounts: { [rating: number]: number };
-    brandCounts: Record<string, number>;
+    brandCounts: { [brandName: string]: number };
+    searchResults: ItemProps[];
+    lunrIndex: lunr.Index | null;
 }
 
 const initialState: ItemsState = {
@@ -17,12 +26,21 @@ const initialState: ItemsState = {
     error: null,
     ratingCounts: {},
     brandCounts: {},
+    searchResults: [],
+    lunrIndex: null,
 };
 
 const itemsSlice = createSlice({
     name: 'items',
     initialState,
-    reducers: {},
+    reducers: {
+        setLunrIndex(state, action: PayloadAction<lunr.Index>) {
+            state.lunrIndex = action.payload;
+        },
+        setSearchResults(state, action: PayloadAction<ItemProps[]>) {
+            state.searchResults = action.payload;
+        },
+    },
     extraReducers: (builder) => {
         builder
             .addCase(fetchProducts.pending, (state) => {
@@ -61,43 +79,60 @@ const itemsSlice = createSlice({
                 state.loading = true;
                 state.error = null;
             })
-            .addCase(fetchItemsByFreeShipping.fulfilled, (state, action: PayloadAction<ItemProps[]>) => {
-                state.items = action.payload;
-                state.loading = false;
-            })
+            .addCase(
+                fetchItemsByFreeShipping.fulfilled,
+                (state, action: PayloadAction<ItemProps[]>) => {
+                    state.items = action.payload;
+                    state.loading = false;
+                }
+            )
             .addCase(fetchItemsByFreeShipping.rejected, (state, action) => {
                 state.loading = false;
-                state.error = action.error.message || 'Failed to fetch items with free shipping';
+                state.error =
+                    action.error.message ||
+                    'Failed to fetch items with free shipping';
             })
             // Fetch by ratings
             .addCase(fetchItemsByRating.pending, (state) => {
                 state.loading = true;
                 state.error = null;
             })
-            .addCase(fetchItemsByRating.fulfilled, (state, action: PayloadAction<FetchItemsByRatingResult>) => {
-                state.items = action.payload.items;
-                state.ratingCounts[action.payload.rating] = action.payload.count; 
-                state.loading = false;
-            })
+            .addCase(
+                fetchItemsByRating.fulfilled,
+                (state, action: PayloadAction<FetchItemsByRatingResult>) => {
+                    state.items = action.payload.items;
+                    state.ratingCounts[action.payload.rating] =
+                        action.payload.count;
+                    state.loading = false;
+                }
+            )
             .addCase(fetchItemsByRating.rejected, (state, action) => {
                 state.loading = false;
-                state.error = action.error.message || 'Failed to fetch items by rating';
+                state.error =
+                    action.error.message || 'Failed to fetch items by rating';
             })
             .addCase(fetchItemsByBrand.pending, (state) => {
                 state.loading = true;
                 state.error = null;
             })
-            .addCase(fetchItemsByBrand.fulfilled, (state, action: PayloadAction<FetchItemsByBrandResult>) => {
-                state.items = action.payload.items;
-                state.brandCounts = action.payload.brandCounts;
-                state.loading = false;
-            })
+            .addCase(
+                fetchItemsByBrand.fulfilled,
+                (state, action: PayloadAction<FetchItemsByBrandResult>) => {
+                    const { items, brandCounts, brandName } = action.payload;
+                    state.items = items;
+                    state.brandCounts[brandName] = brandCounts;
+                    state.loading = false;
+                }
+            )
             .addCase(fetchItemsByBrand.rejected, (state, action) => {
                 state.loading = false;
-                state.error = action.error.message || 'Failed to fetch items by brand';
+                state.error =
+                    action.error.message || 'Failed to fetch items by brand';
             });
     },
 });
+
+export const { setLunrIndex, setSearchResults } = itemsSlice.actions;
 
 const { reducer } = itemsSlice;
 

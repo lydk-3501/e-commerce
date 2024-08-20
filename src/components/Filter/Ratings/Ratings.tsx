@@ -11,7 +11,9 @@ const Ratings: React.FC = () => {
     const { t } = useTranslation();
     const dispatch = useDispatch();
     const params = useSelector((state: RootState) => state.filterSlice);
-    const ratingCounts = useSelector((state: RootState) => state.Items.ratingCounts);
+    const ratingCounts = useSelector(
+        (state: RootState) => state.Items.ratingCounts
+    );
 
     const handleRatingSelect = (rating: number) => {
         dispatch(setFilterParams({ ...params, rating }));
@@ -26,17 +28,21 @@ const Ratings: React.FC = () => {
 
     const renderStars = (rating: number) => {
         const isSelected = params.rating === rating;
-        const count = ratingCounts[rating] || 0; 
+        const count = ratingCounts[rating] || 0;
         return (
             <button
                 key={rating}
                 onClick={() => handleRatingSelect(rating)}
-                className={`flex text-[26px] mb-2 ${!isSelected ? 'opacity-60' : ''}`}
+                className={`flex text-[26px] mb-2 ${
+                    !isSelected ? 'opacity-60' : ''
+                }`}
             >
                 {Array.from({ length: 5 }, (_, index) => (
                     <IoMdStar
                         key={index}
-                        className={`mr-1 ${index < rating ? 'text-yellow-500' : 'text-gray-300'}`}
+                        className={`mr-1 ${
+                            index < rating ? 'text-yellow-500' : 'text-gray-300'
+                        }`}
                     />
                 ))}
                 <span className="brand-item-count bg-gray-300 font-bold ml-2 mt-[6px] px-1 rounded tracking-[1.1px] text-[0.64rem] text-gray-600">
